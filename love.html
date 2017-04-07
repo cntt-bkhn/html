@@ -1,0 +1,191 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>.....</title>
+	<link rel="shorcut icon" href="heart.jpeg"/>
+</head>
+<body>
+	<div id="main-outer">
+	<div id="main">
+		<div id="text">
+			EM CÓ YÊU ANH KHÔNG?
+		</div>
+		<div id="button-row">
+			<button id="yes">Có</button>
+			<button id="no">Không</button>
+		</div>
+	</div>
+	</div>
+
+	<div id="popup-outer">
+	<div hidden id="popup">
+		<button id="exit">X</button>
+		<div id="popup-text">
+		Anh biết mà
+		</div>
+	</div>
+	</div>
+
+<style>
+#exit {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	height: 20px;
+	background-color: red;
+}
+#popup-text {
+	position: absolute;
+	width: 100%;
+	font-family: Arial;
+	font-size: 27pt;
+	text-align: center;
+	top: 80px;
+	color: green;
+}
+#popup {
+	position: relative;
+	background: #EEEEEE;
+	margin: 0 auto;
+	width: 300px;
+	height: 220px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px;
+
+	box-shadow: 5px 5px 5px grey;
+}
+#popup-outer {
+	position: absolute;
+	top: 70px;
+	width: 100%;
+}
+
+#yes {
+	position: absolute;
+	height: 30px;
+	width: 100px;
+	left: 160px;
+	box-shadow: 3px 3px 3px grey;
+}
+#no {
+	position: absolute;
+	height: 30px;
+	width: 100px;
+	right: 160px;
+	box-shadow: 3px 3px 3px grey;
+}
+#button-row {
+	position: absolute;
+	height: 30px;
+	width: 100%;
+	bottom: 70px;
+}
+
+#text {
+	top: 80px;
+	position: absolute;
+	width: 100%;
+	font-size: 28pt;
+	font-family: Arial;
+	text-align: center;
+}
+
+#main {
+	position: relative;
+	width: 600px;
+	height: 300px;
+	background: linear-gradient(to bottom, white, #DDDDDD);
+	margin: 0 auto;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 10px;
+
+	box-shadow: 5px 5px 5px grey;
+}
+
+#main-outer {
+	position: absolute;
+	top: 40px;
+	width: 100%;
+}
+</style>
+<script>
+	nobutton_moved = false;
+	buttons_swaped = true;
+	no_count = 0;
+
+	var yes = document.getElementById("yes");
+	var no = document.getElementById("no");
+	var popup = document.getElementById("popup");
+	var exit = document.getElementById("exit");
+	var left = yes, right = no;
+
+	exit.onclick = function() {
+		popup.style.display = 'none';
+	}
+
+	function yes_onclick() {
+		no_count = 0;
+		popup.style.display = 'block';
+	}
+
+	function yes_onmouseover() {
+	}
+	
+	var move_count = 0;
+	var interval = null;
+	
+	function move_buttons() {
+		if (move_count == 4) {
+			left.style.display = 'none';
+			right.style.display = 'none';
+		}
+
+		move_count++;
+		left.style.left -= 3;
+		right.style.right -= 3;
+		if (move_count == 40) {
+			clearInterval(interval);
+		}
+	}
+
+	function no_onmouseover() {
+		no_count++;
+		if (no_count >= 6) {
+			no.style.top = '0px';
+			interval = setInterval(move_buttons, 40);
+			return;
+		}
+
+		if (!nobutton_moved) {
+			swap_button = Math.random() >= 0.5;
+			if (!swap_button) {
+				no.style.top = "-60px";
+				nobutton_moved = true;
+				return;
+			}
+
+			yes.innerHTML = "Không";
+			no.innerHTML = "Có";
+
+			var tmp = yes;
+			yes = no;
+			no = tmp;
+			yes.onmouseover = yes_onmouseover;
+			yes.onclick = yes_onclick;
+			no.onmouseover = no_onmouseover;
+		}
+		else {
+			no.style.top = "0px";
+			nobutton_moved = false;
+		}
+	}
+
+	yes.onmouseover = yes_onmouseover;
+	yes.onclick = yes_onclick;
+	no.onmouseover = no_onmouseover;
+</script>
+</body>
+</html>
